@@ -1,36 +1,29 @@
 import './App.css'
-import { Component } from 'react'
+import { useState } from 'react'
 import { UserClass, UserFunction, UserChildren } from './user'
 
-const users = [
-  { name: 'Ivan', years: 30, },
-  { name: 'Marko', years: 35 },
-  { name: 'Ana', years: 25 },
-];
-
-class App extends Component {
-  constructor(props) {
-    super(props)
+function App() {
   
-    this.state = {
-       users: [
-        { name: 'Ivan', years: 30, },
-        { name: 'Marko', years: 35 },
-        { name: 'Ana', years: 25 },
-       ],
-       tekst: "Ćiribu Ćiriba"
-    }
-  }
+  const initialUsers = [
+    { name: "Gimli", years: 140},
+    { name: "Aragorn", years: 88},
+    { name: "Legolas", years: 500 },
+   ]
 
-  uvecajGodine = () => {
-    const newUsers = this.state.users.map(user => {
-      return {...user, years: user.years + 30}
+   const [users, setUsers] = useState(initialUsers)
+
+   const tekst = "You shall be older one year"
+
+  const uvecajGodine = () => {
+    setUsers(prevState => {
+      const updatedUsers = prevState.map(user => { 
+        return {...user, years: user.years + 1}
+      })
+      return updatedUsers
     })
-    this.setState({users: newUsers})
   }
-  render() {
-    const {users, tekst} = this.state
-    return (
+    
+  return (
       <>
         <h1>State</h1>
         <UserClass name={users[0].name} years={users[0].years} />
@@ -38,10 +31,12 @@ class App extends Component {
         <UserChildren name={users[2].name} years={users[2].years}>
           {tekst}
         </UserChildren>
-        <button onClick={this.uvecajGodine}>Postaraj ekipu</button>
+        <button onClick={uvecajGodine}>Wizardry</button>
       </>
     )
+
   }
-}
+   
+
 
 export default App
